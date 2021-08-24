@@ -1,18 +1,13 @@
 #!/reg/g/pcds/epics-dev/mlandrum/setra/current/bin/linux-x86_64/setra
 
 < envPaths
-epicsEnvSet( "ENGINEER",  "Mason Landrum" )
+epicsEnvSet( "ENGINEER",  "Jeremy Lorelli" )
 epicsEnvSet( "LOCATION",  "TECH-AQM-TEST" )
 epicsEnvSet( "IOCSH_PS1", "tst-setra-01> " )
 epicsEnvSet( "IOC_PV",    "TST:SETRA:01")
 epicsEnvSet( "IOCTOP", "/reg/g/pcds/epics-dev/mlandrum/setra/current")
 
-
-
 cd( "$(IOCTOP)" )
-
-
-
 
 # Run common startup commands for linux soft IOC's
 < /reg/d/iocCommon/All/pre_linux.cmd
@@ -28,7 +23,7 @@ setra_registerRecordDeviceDriver(pdbbase)
 # Configure each device
 
 
-drvAsynIPPortConfigure( "SETRA1", "172.21.148.33:502 TCP", 0, 0, 1 )
+drvAsynIPPortConfigure( "SETRA1", "setra-1:502 TCP", 0, 0, 1 )
 
 modbusInterposeConfig("SETRA1",0,5000,0)
 
