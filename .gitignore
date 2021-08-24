@@ -1,0 +1,52 @@
+# Ignore certain bad files
+.vscode/
+.vscode/ipch
+bin/
+lib/
+__pycache__
+*.o
+*.a
+*.so
+*.d
+
+# We should ignore changes in the user settings file
+configure/CONFIG_SITE
+
+# Ignore this shtuff
+dbd/
+db/
+lib/
+include/
+bin/
+
+# Ignore all local configs
+*.local
+!configure/RELEASE.local
+O.*
+
+.kdev4/
+
+compile_commands.json
+
+*.tar 
+*.swp
+
+ek.txt
+makelist.py
+maketemplate.py
+terminals.xml
+tparse\.py
+
+/*.xml
+.clangd
+
+ek9000App/src/BhcConfigFiles/
+ek9000App/src/BhcConfigFiles.zip
+
+.idea
+.vscode
+
+db/
+
+# Ignore ioc generated files
+envPaths
