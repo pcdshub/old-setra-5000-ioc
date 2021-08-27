@@ -1,0 +1,156 @@
+
+#Record for Setra AQI
+
+record(longout, $(DEV):REQ)
+{       
+	#field(DESC, "Sets reg 8002 to 0 to read 9000 registers")
+        field(DTYP, "asynInt32")
+        field(OUT, "@asyn(Setra_set_reg,2)INT32_LE")
+        field(SCAN, "1 second")
+        field(VAL, "0")
+        field(FLNK, "$(DEV):PUMP_ON")
+}
+
+
+record(longout, $(DEV):PUMP_ON)
+{
+        
+	#field(DESC, "Sets to 1 to turn on pump/starts collecting partical count")
+	field(DTYP, "asynInt32")
+        field(OUT, "@asyn(Setra_samp_reg,0)UINT16")
+        field(SCAN, "Passive")
+        field(VAL, "0")
+        field(FLNK, "$(DEV):RNUM")
+}
+
+
+
+
+
+
+
+
+record(longin, $(DEV):RNUM)
+{
+        
+	#field(DESC, "Reads current # of record stored")
+	field(DTYP, "asynInt32")
+        field(INP, "@asyn(Setra_read_reg,0)INT32_LE")
+        field(SCAN, "Passive")
+        
+        field(FLNK, "$(DEV):TEMP_RAW")
+}
+
+
+
+
+
+
+record(longin, $(DEV):TEMP_RAW)
+{       
+
+
+
+	#field(DESC, "reads temperaturereg 9079")
+        field(DTYP, "asynInt32")
+        field(INP, "@asyn(Setra_read_reg,79)UINT16")
+        field(SCAN, "Passive")
+	
+        field(FLNK, "$(DEV):RH")
+}
+
+
+
+
+
+
+record(longin, $(DEV):RH)
+{	
+
+	#field(DESC, "Reads Humidity register 9080")
+        field(DTYP, "asynInt32")
+        field(INP, "@asyn(Setra_read_reg,80)UINT16")
+        field(SCAN, "Passive")
+        field(FLNK, "$(DEV):BP_RAW")
+}
+
+
+record(ai, $(DEV):BP_RAW)
+{
+
+
+	#field(DESC, "Reads Barometric register 9082")
+        field(DTYP, "asynFloat64")
+        field(INP, "@asyn(Setra_read_reg,82)FLOAT32_BE")
+        field(SCAN, "Passive")
+	field(PREC, "7")
+        field(FLNK, "$(DEV):BP")
+
+}
+
+record(calc, $(DEV):BP)
+{
+
+
+        #field(DESC, " Barometric to mbar")
+     
+        field(INPA, "TST:SETRA:01:BP_RAW NPP NMS")
+
+        field(SCAN, "Passive")
+        field(CALC, "A*10")
+	field(EGU, "mbar")
+        field(FLNK, "$(DEV):TEMP")
+
+
+
+}
+
+
+record(calc, $(DEV):TEMP)
+{
+
+
+
+        field(DESC, "converts raw to deg C")
+        field(INPA, "TST:SETRA:01:TEMP_RAW NPP NMS")
+        field(CALC, "A*0.1")
+       	field(EGU,  "C")
+	field(SCAN, "Passive")
+
+        field(FLNK, "$(DEV):DATE")
+}
+
+
+
+
+
+
+
+
+record(stringin, $(DEV):DATE)
+{	
+	#field(DESC, "Reads Date register 9002")
+        field(DTYP, "asynOctetRead")
+        field(INP, "@asyn(Setra_read_reg,2)STRING_LOW")
+        field(SCAN, "Passive")
+        field(FLNK, "$(DEV):TIME")
+}
+
+record(stringin, $(DEV):TIME)
+{
+	#field(DESC, "Reads time of record at register 9013")
+        field(DTYP, "asynOctetRead")
+        field(INP, "@asyn(Setra_read_reg,13)STRING_LOW")
+        field(SCAN, "Passive")
+        field(FLNK, "$(DEV):TVOC")
+}
+
+record(longin, $(DEV):TVOC)
+{
+	#field(DESC, "Reads total volitile organ chem at register 9084 *Only on AQI series device")
+        field(DTYP, "asynInt32")
+        field(INP, "@asyn(Setra_read_reg,84)UINT16")
+        field(SCAN, "Passive")
+       # field(FLNK, "$(DEV):DATE")
+}
+
