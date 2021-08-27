@@ -48,5 +48,8 @@ ek9000App/src/BhcConfigFiles.zip
 
 db/
 
-# Ignore ioc generated files
+# Ignore template ioc generated files
 envPaths
+archive/
+autosave/
+children/build

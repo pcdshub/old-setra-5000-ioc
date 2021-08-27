@@ -1,3 +1,11 @@
-TODO: Add notes on how to build and run this IOC,
-along with any useful information that would help
-someone else to support this IOC if needed.
+This repo contains a template IOC used to 
+create a new IOC for a setra 5000 particle
+counter with minimal effort. Unless you're 
+working on SLAC's systems, this isn't of 
+much use to you, since it's heavily tied 
+to our setup. However, you can lift the 
+relevant .db and .cmd files from this repo
+for use in your own IOC. The branch `main`
+still contains the original IOC which is 
+more useful to the EPICS community at 
+large.
